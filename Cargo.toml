@@ -75,8 +75,15 @@ lto = "thin"
 codegen-units = 1
 opt-level = 3
 
+
 [profile.release]
-lto = "thin"
+opt-level = "z"            # "z" optimizes for size; use "s" for slightly better speed
+lto = "fat"                # "fat" gives best performance; "thin" is faster to compile
+codegen-units = 1          # fewer units = better optimization (at cost of compile time)
+strip = true               # removes debug symbols, reducing size (since Rust 1.59+)
+panic = "abort"            # smaller binary if unwinding is not needed
+incremental = false        # disable incremental builds for clean, repeatable builds
+
 
 [patch.crates-io]
 # REDOX START, Uncomment when you want to compile/check with redoxer
